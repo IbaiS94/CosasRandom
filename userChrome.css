@@ -1,0 +1,187 @@
+
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] #sidebar-header {
+  visibility: collapse;
+}
+ 
+ 
+/* Show sidebar only when the cursor is over it  */
+/* The border controlling sidebar width will be removed so you'll need to modify these values to change width */
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] {
+  --uc-sidebar-width: 100px; /* Ancho original reducido de 47px a 35px */
+  --uc-sidebar-hover-width: 280px; /* Ancho al pasar el cursor reducido de 232px a 200px */
+  --uc-autohide-sidebar-delay: 0ms;
+  position: relative;
+  min-width: var(--uc-sidebar-width) !important;
+  width: var(--uc-sidebar-width) !important;
+  max-width: var(--uc-sidebar-width) !important;
+  z-index: 1;
+  margin-top: -2px;
+}
+
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"][positionend] {
+  direction: rtl;
+}
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"][positionend]>* {
+  direction: ltr;
+}
+ 
+#sidebar-box[positionend]:-moz-locale-dir(rtl) {
+  direction: ltr;
+}
+ 
+#sidebar-box[positionend]:-moz-locale-dir(rtl)>* {
+  direction: rtl;
+}
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]>#sidebar {
+  transition: min-width 450ms ease-in-out 450ms, box-shadow 450ms ease-in-out 450ms !important; /* Slowed down the transition */  min-width: var(--uc-sidebar-width) !important;
+  min-width: var(--uc-sidebar-width) !important;
+  will-change: min-width;
+}
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:hover>#sidebar {
+  min-width: var(--uc-sidebar-hover-width) !important;
+  /* Ajustando el tiempo de transición a 600ms y el retraso a 300ms con función de temporización ease-in-out */
+  transition: min-width 500ms ease-in-out 300ms, box-shadow 500ms ease-in-out 300ms !important;
+  box-shadow: 0 0 4px rgba(10, 10, 10, .5);
+  clip-path: inset(0px -15px 0px -15px);
+}
+
+ 
+/* Add sidebar divider and give it background */
+ 
+#sidebar,
+#sidebar-header {
+  background-color: var(--toolbar-bgcolor) !important;
+  border-inline: 1px solid var(--chrome-content-separator-color);
+  border-inline-width: 0px 1px;
+}
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:not([positionend])> :-moz-locale-dir(rtl),
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"][positionend]>* {
+  border-inline-width: 1px 0px;
+}
+ 
+/* Move statuspanel to the other side when sidebar is hovered so it doesn't get covered by sidebar */
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:not([positionend]):hover~#appcontent #statuspanel {
+  inset-inline: auto 0px !important;
+}
+ 
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:not([positionend]):hover~#appcontent #statuspanel-label {
+  margin-inline: 0px !important;
+  border-left-style: solid !important;
+}
+ 
+
+ 
+#PersonalToolbar {
+  --uc-bm-height: 20px;
+  /* Might need to adjust if the toolbar has other buttons */
+  --uc-bm-padding: 7px;
+  /* Vertical padding to be applied to bookmarks */
+  --uc-autohide-toolbar-delay: 600ms;
+  /* The toolbar is hidden after 0.6s */
+ 
+  /* 0deg = "show" ; 90deg = "hide" ;  Set the following to control when bookmarks are shown */
+  --uc-autohide-toolbar-focus-rotation: 0deg;
+  /* urlbar is focused */
+  --uc-autohide-toolbar-hover-rotation: 0deg;
+  /* cursor is over the toolbar area */
+}
+ 
+:root[uidensity="compact"] #PersonalToolbar {
+  --uc-bm-padding: 1px;
+}
+ 
+:root[uidensity="touch"] #PersonalToolbar {
+  --uc-bm-padding: 7px
+}
+ 
+#PersonalToolbar:not([customizing]) {
+  position: relative;
+  margin-bottom: calc(0px - var(--uc-bm-height) - 2 * var(--uc-bm-padding));
+  transform: rotateX(90deg);
+  transform-origin: top;
+  transition: transform 135ms linear var(--uc-autohide-toolbar-delay) !important;
+  z-index: 1;
+  /* The following properties should allow the themes with trasparent toolbars to work */
+  background-color: transparent !important;
+  background-repeat: no-repeat, no-repeat, var(--lwt-background-tiling);
+  --uc-bg-y: calc(-2 * (var(--tab-block-margin) + var(--toolbarbutton-inner-padding) + var(--toolbarbutton-outer-padding)) - var(--tab-min-height) - 16px - var(--bookmark-block-padding));
+  background-position: top left, top left, var(--lwt-background-alignment, top left);
+  background-position-y: top, top, var(--uc-bg-y), var(--uc-bg-y), var(--uc-bg-y);
+  background-image: var(--toolbar-bgimage), linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)), var(--lwt-header-image, var(--lwt-additional-images)) !important;
+}
+ 
+#PlacesToolbarItems>.bookmark-item,
+#OtherBookmarks,
+#PersonalToolbar>#import-button {
+  padding-block: var(--uc-bm-padding) !important;
+}
+ 
+#nav-bar:focus-within+#PersonalToolbar {
+  transition-delay: 100ms !important;
+  transform: rotateX(var(--uc-autohide-toolbar-focus-rotation, 0));
+}
+ 
+#navigator-toolbox:hover>#PersonalToolbar {
+  transition-delay: 100ms !important;
+  transform: rotateX(var(--uc-autohide-toolbar-hover-rotation, 0));
+}
+ 
+#navigator-toolbox:hover>#nav-bar:focus-within+#PersonalToolbar {
+  transform: rotateX(0);
+}
+ 
+ 
+/* hides the native tabs */
+ 
+/* Ajustes para Sidebery y otras personalizaciones en Firefox */
+
+.titlebar-color {
+  background-color: var(--toolbar-bgcolor);
+}
+
+/* Sidebar customization */
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] #sidebar-header {
+  visibility: collapse;
+}
+
+/* Sidebar autohide */
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] {
+  /* Configuraciones de ancho y transición para la sidebar */
+}
+
+/* PersonalToolbar (Barra de marcadores) - escondida por defecto */
+#PersonalToolbar {
+  display: none; /* Se cambia a 'none' para que no aparezcan los marcadores */
+}
+
+/* Resto de las personalizaciones para la barra de marcadores auto-ocultable */
+
+/* Ajustes adicionales para ocultar las pestañas nativas y personalizar el nav-bar */
+.tabbrowser-tab {
+  visibility: collapse;
+}
+
+#nav-bar {
+  margin-top: -40px; /* La barra donde estaban las pestañas */
+  margin-right: 140px;
+  border-radius: 0px; /*a 20 de 16 */
+}
+#TabsToolbar-customization-target { visibility: collapse !important; } 
+/* adapt to your needs */
+
+/* placing icons */
+.titlebar-button {
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+	padding-top: 20px !important;
+}
+
+
